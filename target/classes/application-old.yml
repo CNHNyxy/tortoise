@@ -1,0 +1,33 @@
+server:
+  port: 8000
+spring:
+  cloud:
+    gateway:
+      # 跨域配置
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - OPTIONS
+      # 路由负载配置
+      default-filters:
+      routes:
+        - id: zk
+          uri: lb://load-balanced-service
+          predicates:
+            - Path=/zk/**
+          filters:
+            - StripPrefix=1
+load-balanced-service:
+  ribbon:
+    # 负载地址
+    listOfServers: http://localhost:8001, http://localhost:8002,http://localhost:8003
+    # 负载轮询策略
+    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RoundRobinRule
+    # 健康检查
+    #NFLoadBalancerPingClassName: com.modules.scistor.config.HealthExamination
