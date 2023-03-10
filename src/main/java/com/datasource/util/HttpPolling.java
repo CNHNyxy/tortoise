@@ -1,4 +1,4 @@
-package com.getway.util;
+package com.datasource.util;
 
 
 public class HttpPolling {
