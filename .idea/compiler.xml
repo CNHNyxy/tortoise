@@ -7,6 +7,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="datasource" />
+        <module name="tortoise-sourcedata" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -19,6 +20,7 @@
       <module name="datasource" options="-parameters" />
       <module name="gateway" options="-parameters" />
       <module name="getway" options="-parameters" />
+      <module name="tortoise-sourcedata" options="-parameters" />
     </option>
   </component>
 </project>
