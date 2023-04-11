@@ -1,0 +1,22 @@
+server:
+  port: 8000
+spring:
+  application:
+    name: nacos-gateway
+  cloud:
+    gateway:
+      routes:
+      - id: zk
+        uri: lb://load-balanced-service
+        predicates:
+          - Path=/zk/**
+        filters:
+          - StripPrefix=1
+    discovery:
+      client:
+        simple:
+          instances:
+            load-balanced-service:
+              - uri: http://43.139.3.60:8003
+              - uri: http://43.139.3.60:8003
+              - uri: http://43.139.3.60:8003
