@@ -1,32 +1,32 @@
 package com.datasource.entity;
 
 
-import com.baomidou.mybatisplus.annotation.*;
-import org.apache.ibatis.type.JdbcType;
+//import com.baomidou.mybatisplus.annotation.*;
+//import org.apache.ibatis.type.JdbcType;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
 
-@TableName("fund_info")
+//@TableName("fund_info")
 public class ETF implements Serializable {
 
     private String code;
 
     private String name;
 
-    @TableId(type = IdType.AUTO)
+    //@TableId(type = IdType.AUTO)
     private Long id;
 
     private Boolean is_oct;
 
-    @TableField(jdbcType = JdbcType.INTEGER)
+    //@TableField(jdbcType = JdbcType.INTEGER)
     private Integer type;
 
-    @TableField(fill = FieldFill.INSERT)
+    //@TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 
-    @TableField(fill = FieldFill.UPDATE)
+    //@TableField(fill = FieldFill.UPDATE)
     private LocalDateTime updateTime;
 
     public String getCode() {
