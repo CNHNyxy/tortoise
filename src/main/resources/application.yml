@@ -14,11 +14,11 @@ spring:
         max-idle: 8 # 默认连接数最小空闲的连接数，默认为 8 。使用负数表示没有限制。
         min-idle: 0 # 默认连接池最小空闲的连接数，默认为 0 。允许设置 0 和 正数。
         max-wait: -1 # 连接池最大阻塞等待时间，单位：毫秒。默认为 -1 ，表示不限制。
-  #datasource:
-    #driver-class-name: com.mysql.cj.jdbc.Driver
-    #url: jdbc:mysql://43.139.3.60:3306/fund?useSSL=false&useUnicode=true&characterEncoding=UTF-8
-    #username: root
-    #password: 123456
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://43.139.3.60:3306/tortoise?useSSL=false&useUnicode=true&characterEncoding=UTF-8
+    username: root
+    password: yqxdfs423
   application:
     name: nacos-gateway
   #config:

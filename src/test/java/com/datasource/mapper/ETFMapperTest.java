@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.datasource.entity.ETF;
 //import okhttp3.*;
+import com.datasource.entity.assetmanagement.Asset;
 import com.datasource.util.QleUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,10 +25,19 @@ public class ETFMapperTest {
     /*@Autowired
     ETFMapper etfMapper;
 */
+
+    @Autowired
+    AssetMapper assetMapper;
+
     /* @Test*/
     public void ETF_Inof() {
        /* List<ETF> allETF = etfMapper.getAllETF();
         System.out.println(allETF);*/
+    }
+
+    @Test
+    public void Asset(){
+        System.out.println(assetMapper.getAllAsset());
     }
 
     /*   @Test*/

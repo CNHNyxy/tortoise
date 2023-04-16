@@ -45,11 +45,17 @@
             <artifactId>spring-cloud-starter-openfeign</artifactId>
         </dependency>-->
         <!-- mybatis plus -->
-       <!-- <dependency>
+       <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
             <version>3.5.2</version>
-        </dependency>-->
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
 
         <!--spring test-->
         <dependency>
@@ -57,19 +63,15 @@
             <artifactId>spring-boot-starter-test</artifactId>
         </dependency>
 
-        <!--<dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <scope>runtime</scope>
-        </dependency>-->
+
 
         <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
-        <!--<dependency>
+        <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.18.26</version>
             <scope>provided</scope>
-        </dependency>-->
+        </dependency>
         <!-- https://mvnrepository.com/artifact/com.squareup.okhttp3/okhttp -->
         <!--<dependency>
             <groupId>com.squareup.okhttp3</groupId>

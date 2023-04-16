@@ -44,11 +44,11 @@ public class ZkGatewayFilter implements GlobalFilter, Ordered {
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         MultiValueMap<String, String> queryParams = exchange.getRequest().getQueryParams();
         System.out.println(queryParams.get("code"));
-        String code = queryParams.get("code").get(0);
         if(queryParams.get("code") == null || "".equals(queryParams.get("code").get(0))){
             System.out.println("不走交易直接请求");
             return chain.filter(exchange);
         }
+        String code = queryParams.get("code").get(0);
         System.out.println("走交易请求");
         URI uri = exchange.getRequest().getURI();
         String rawQuery = uri.getRawQuery();
