@@ -17,7 +17,7 @@ public class AssetServiceImpl implements AssetService {
 
     @Override
     public List<AssetVo> getAssetList() {
-        System.out.println(33333333);
-        return assetMapper.getAllAsset();
+        //System.out.println(33333333);
+        return null;
     }
 }

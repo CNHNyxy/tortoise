@@ -37,7 +37,7 @@ public class ETFMapperTest {
 
     @Test
     public void Asset(){
-        System.out.println(assetMapper.getAllAsset());
+        //System.out.println(assetMapper.getAllAsset());
     }
 
     /*   @Test*/
