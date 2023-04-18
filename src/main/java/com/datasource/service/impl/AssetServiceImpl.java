@@ -18,6 +18,6 @@ public class AssetServiceImpl implements AssetService {
     @Override
     public List<AssetVo> getAssetList() {
         System.out.println(33333333);
-        return assetMapper.getAllAsset();
+        return assetMapper.getAssetList(1,1,"1","2");
     }
 }
