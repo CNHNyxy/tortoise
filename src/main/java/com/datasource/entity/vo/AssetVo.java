@@ -11,10 +11,13 @@ import java.util.Date;
 @Setter
 @ToString
 public class AssetVo {
-    private String userName;
+//    private String UserName;
     private String AssetName;
     private BigDecimal Amount;
+    private BigDecimal MarketValue;
+    private BigDecimal Cost;
+    private BigDecimal Profit;
     private String Currency;
     private java.util.Date Date;
-    private String categoryName;
+    private String CategoryName;
 }
