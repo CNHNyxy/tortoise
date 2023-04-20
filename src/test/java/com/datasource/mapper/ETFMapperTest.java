@@ -1,6 +1,7 @@
 package com.datasource.mapper;
 
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.datasource.entity.ETF;
@@ -61,13 +62,16 @@ public class ETFMapperTest {
 
     @Test
     public void Qle() {
-        HashMap<String, Object> stringObjectHashMap = new HashMap<>();
-        stringObjectHashMap.put("aaa","222222");
-        Object exec = qleUtil.exec("1111", stringObjectHashMap);
-        System.out.println(exec);
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("code","3333333");
-        JSONArray objects = new JSONArray();
-        objects.add(jsonObject);
+        JSONArray rq = new JSONArray();
+        JSONArray rp = new JSONArray();
+        JSONObject[] jolist = (JSONObject[])rq.toArray();
+        JSONObject rps = null;
+        for(int i = 0;i<jolist.length;i++){
+            rps = new JSONObject();
+            rps.put("name",jolist[i].get("名称"));
+            rps.put("code",jolist[i].get("代码"));
+            rp.add(rps);
+        }
+        String s = rp.toJSONString();
     }
 }
