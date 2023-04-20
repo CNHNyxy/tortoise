@@ -10,6 +10,6 @@ import lombok.ToString;
 @Setter
 @ToString
 public class AssetCategory {
-    private int categoryId;
-    private String categoryName;
+    private int CategoryID;
+    private String CategoryName;
 }

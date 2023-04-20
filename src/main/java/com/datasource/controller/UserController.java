@@ -21,7 +21,12 @@ public class UserController {
         System.out.println(token);
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("code",20000);
-        jsonObject.put("data","111111111111");
+        JSONObject jsonObject1 = new JSONObject();
+        jsonObject1.put("roles","111");
+        jsonObject1.put("name","2222");
+        jsonObject1.put("avatar","3333");
+        jsonObject1.put("introduction","4444");
+        jsonObject.put("data",jsonObject1);
         return jsonObject;
     }
 
