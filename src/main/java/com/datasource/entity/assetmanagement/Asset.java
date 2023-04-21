@@ -23,7 +23,9 @@ public class Asset{
     private BigDecimal Cost;
     private BigDecimal Profit;
     private String Currency;
-    private Date Date;
+    private Date create_time;
+    private Date update_time;
+    private Integer is_deleted;
     private String Remarks;
 
 }

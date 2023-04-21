@@ -18,6 +18,6 @@ public class AssetVo {
     private BigDecimal Cost;
     private BigDecimal Profit;
     private String Currency;
-    private java.util.Date Date;
+    private java.util.Date create_time;
     private String CategoryName;
 }
