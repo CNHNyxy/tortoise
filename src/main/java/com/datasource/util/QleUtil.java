@@ -23,6 +23,7 @@ public class QleUtil {
     private StringRedisTemplate stringRedisTemplate;
 
     public Object exec(String code,HashMap<String,Object> hashMap){
+        System.out.println(1111111);
         DefaultContext<String, Object> stringObjectDefaultContext = null;
         if(qleLocal.get() == null){
             stringObjectDefaultContext = new DefaultContext<String, Object>();
@@ -32,10 +33,11 @@ public class QleUtil {
         for (String str : hashMap.keySet()){
             stringObjectDefaultContext.put(str,hashMap.get(str));
         }
-        String c = stringRedisTemplate.opsForValue().get(code);
+        String c = (String)stringRedisTemplate.opsForHash().get(code, "PROC1");
         Object r = null;
         try {
             r = exp.execute(c, stringObjectDefaultContext, null, true, false);
+            System.out.println(22222222);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

@@ -3,6 +3,7 @@ package com.datasource.config;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.datasource.entity.vo.HttpMsgVo;
 import com.datasource.util.QleUtil;
 import org.assertj.core.util.Lists;
 import org.json.JSONString;
@@ -29,9 +30,12 @@ import reactor.core.publisher.Mono;
 
 import java.net.URI;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.springframework.cloud.gateway.support.ServerWebExchangeUtils.ORIGINAL_RESPONSE_CONTENT_TYPE_ATTR;
 
 @Component
@@ -40,37 +44,46 @@ public class ZkGatewayFilter implements GlobalFilter, Ordered {
     @Autowired
     private QleUtil qleUtil;
 
+
+    @Autowired
+    private HttpMsgVo httpMsgVo;
+
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         MultiValueMap<String, String> queryParams = exchange.getRequest().getQueryParams();
         System.out.println(queryParams);
-        //System.out.println(queryParams.get("code"));
-        if(queryParams == null || queryParams.get("code") == null || "".equals(queryParams.get("code").get(0))){
+        ServerHttpRequest request = null;
+        boolean flag = true;
+        String code = null;
+        if (queryParams == null || queryParams.get("code") == null || "".equals(queryParams.get("code").get(0))) {
             System.out.println("不走交易直接请求");
-            return chain.filter(exchange);
-        }
-        String code = queryParams.get("code").get(0);
-        System.out.println("走交易请求");
-        URI uri = exchange.getRequest().getURI();
-        String rawQuery = uri.getRawQuery();
-        String[] split = rawQuery.split("&");
-        StringBuffer stringBuffer = new StringBuffer();
-        for(String sp:split){
-            if(!sp.contains("code")){
-                stringBuffer.append(sp+"&");
+        } else {
+            flag = false;
+            code = queryParams.get("code").get(0);
+            System.out.println("走交易请求");
+            URI uri = exchange.getRequest().getURI();
+            String rawQuery = uri.getRawQuery();
+            System.out.println(rawQuery);
+            String[] split = rawQuery.split("&");
+            System.out.println(Arrays.toString(split));
+            StringBuffer stringBuffer = new StringBuffer();
+            for (String sp : split) {
+                if (!sp.contains("code")) {
+                    stringBuffer.append(sp + "&");
+                }
             }
+            String substring = stringBuffer.substring(0, stringBuffer.length() == 0 ? 0 : stringBuffer.length());
+            System.out.println(substring);
+            URI newUri = UriComponentsBuilder.fromUri(uri)
+                    .replaceQuery(substring)
+                    .build(true)
+                    .toUri();
+            request = exchange.getRequest().mutate().uri(newUri).build();
         }
-        String substring = stringBuffer.substring(0, stringBuffer.length() - 1);
-        System.out.println(substring);
-        URI newUri = UriComponentsBuilder.fromUri(uri)
-                .replaceQuery(substring)
-                .build(true)
-                .toUri();
-        ServerHttpRequest request = exchange.getRequest().mutate().uri(newUri).build();
-
 
         ServerHttpResponse originalResponse = exchange.getResponse();
         DataBufferFactory bufferFactory = originalResponse.bufferFactory();
+        String finalCode = code;
         ServerHttpResponseDecorator response = new ServerHttpResponseDecorator(originalResponse) {
             @Override
             public Mono<Void> writeWith(Publisher<? extends DataBuffer> body) {
@@ -93,13 +106,28 @@ public class ZkGatewayFilter implements GlobalFilter, Ordered {
                                 }
                             });
                             String responseData = listStr(list);
-                            //System.out.println("responseData："+responseData);
-                            HashMap<String, Object> stringObjectHashMap = new HashMap<>();
-                            JSONArray rqJson = JSON.parseArray(responseData);
-                            stringObjectHashMap.put("rqJson",rqJson);
-                            JSONArray exec = (JSONArray)qleUtil.exec(code, stringObjectHashMap);
-                            System.out.println(exec);
-                            byte[] uppedContent = new String(exec.toJSONString().getBytes(), Charset.forName("UTF-8")).getBytes();
+                            //System.out.println(responseData);
+                            JSONObject jsonObject = new JSONObject();
+                            if(finalCode != null) {
+                                HashMap<String, Object> stringObjectHashMap = new HashMap<>();
+                                JSONArray rqJson = JSON.parseArray(responseData);
+                                stringObjectHashMap.put("rqJson", rqJson);
+                                Object o = qleUtil.exec(finalCode, stringObjectHashMap);
+                                JSONArray exec = null;
+                                if (o instanceof JSONArray) {
+                                    exec = (JSONArray) o;
+                                    jsonObject.put("code", 20000);
+                                } else {
+                                    exec = new JSONArray();
+                                    jsonObject.put("code", 10000);
+                                }
+                                jsonObject.put("msg", exec);
+                                System.out.println(jsonObject);
+                            }else{
+                                jsonObject.put("code", 20000);
+                                jsonObject.put("msg",JSON.parseArray(responseData));
+                            }
+                            byte[] uppedContent = jsonObject.toJSONString().getBytes(UTF_8);
                             originalResponse.getHeaders().setContentLength(uppedContent.length);
                             return bufferFactory.wrap(uppedContent);
                         }));
@@ -112,6 +140,10 @@ public class ZkGatewayFilter implements GlobalFilter, Ordered {
                 return writeWith(Flux.from(body).flatMapSequential(p -> p));
             }
         };
+
+        if(flag){
+            return chain.filter(exchange.mutate().response(response).build());
+        }
         return chain.filter(exchange.mutate().request(request).response(response).build());
     }
 
@@ -128,6 +160,7 @@ public class ZkGatewayFilter implements GlobalFilter, Ordered {
     public int getOrder() {
         return -1;
     }
+
 
 
 }
