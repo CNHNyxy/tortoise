@@ -5,6 +5,7 @@ import com.datasource.entity.ETF;
 import com.datasource.entity.assetmanagement.Asset;
 import com.datasource.entity.vo.AssetCategoryVo;
 import com.datasource.entity.vo.AssetVo;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.Date;

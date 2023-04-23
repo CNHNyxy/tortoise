@@ -16,6 +16,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -39,6 +40,19 @@ public class ETFMapperTest {
     @Test
     public void Asset(){
         //System.out.println(assetMapper.getAllAsset());
+        Asset asset = new Asset();
+        asset.setAssetName("11111");
+        asset.setAssetID(1);
+        asset.setCurrency("11111");
+        asset.setCost(new BigDecimal("1111"));
+        asset.setAmount(new BigDecimal("1111"));
+        asset.setProfit(new BigDecimal("11111"));
+        asset.setMarketValue(new BigDecimal("11111"));
+        asset.setRemarks("11111");
+        asset.setCategoryID(1);
+
+        int insert = assetMapper.insert(asset);
+        System.out.println(insert);
     }
 
     /*   @Test*/
