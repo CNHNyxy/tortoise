@@ -37,10 +37,13 @@ public class AssetController {
         JSONObject jsonObject = JSON.parseObject(body);
         Date[] dates = jsonObject.getObject("date", Date[].class);
         Calendar calendar = new GregorianCalendar();
+        calendar.setTime(dates[0]);
+        Date time1 = calendar.getTime();
+        calendar.setTime(dates[1]);
         calendar.add(calendar.DATE,1);
-        Date time = calendar.getTime();
-        System.out.println(time);
-        List<AssetVO> assetList = assetMapper.getAssetList(jsonObject.getIntValue("UserID"),jsonObject.getIntValue("CategoryID"),dates[0],time,jsonObject.getIntValue("index"),jsonObject.getIntValue("size"));
+        Date time2 = calendar.getTime();
+        System.out.println(time2);
+        List<AssetVO> assetList = assetMapper.getAssetList(jsonObject.getIntValue("UserID"),jsonObject.getIntValue("CategoryID"),time1,time2,jsonObject.getIntValue("index"),jsonObject.getIntValue("size"));
         System.out.println(assetList);
         httpMsg.setCode(20000);
         httpMsg.setMsg(assetList);

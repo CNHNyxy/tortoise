@@ -10,13 +10,13 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 
-@TableName("Asset")
+@TableName("asset")
 @Getter
 @Setter
 @ToString
 public class AssetDTO {
     //@TableField(value = "UserID")
-    private  Integer userId;
+    private Integer userId;
     //@TableField("AssetID")
     private Integer assetId;
     //@TableField("AssetName")
