@@ -1,25 +1,19 @@
 package com.datasource.mapper;
 
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.datasource.entity.ETF;
 //import okhttp3.*;
-import com.datasource.entity.assetmanagement.Asset;
 import com.datasource.util.QleUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.http.HttpMethod;
-import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
-import java.math.BigDecimal;
-import java.util.HashMap;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @SpringBootTest
 public class ETFMapperTest {
@@ -38,21 +32,16 @@ public class ETFMapperTest {
     }
 
     @Test
-    public void Asset(){
-        //System.out.println(assetMapper.getAllAsset());
-        Asset asset = new Asset();
-        asset.setAssetName("11111");
-        asset.setAssetID(1);
-        asset.setCurrency("11111");
-        asset.setCost(new BigDecimal("1111"));
-        asset.setAmount(new BigDecimal("1111"));
-        asset.setProfit(new BigDecimal("11111"));
-        asset.setMarketValue(new BigDecimal("11111"));
-        asset.setRemarks("11111");
-        asset.setCategoryID(1);
+    public void Asset() throws ParseException {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
+        Date parse = simpleDateFormat.parse("20230411");
+        Date parse1 = simpleDateFormat.parse("20230424");
+        Calendar calendar = new GregorianCalendar();
+        calendar.setTime(parse1);
+        calendar.add(calendar.DATE,1);
+        parse1 = calendar.getTime();
+        System.out.println(assetMapper.getAssetList(1, 1, parse, parse1, 0, 10));
 
-        int insert = assetMapper.insert(asset);
-        System.out.println(insert);
     }
 
     /*   @Test*/

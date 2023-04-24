@@ -7,7 +7,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class AssetCategoryVo {
-    private int CategoryID;
-    private String CategoryName;
+public class AssetCategoryVO {
+    private int categoryId;
+    private String categoryName;
 }

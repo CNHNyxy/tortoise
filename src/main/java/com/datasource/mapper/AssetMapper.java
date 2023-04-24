@@ -1,22 +1,22 @@
 package com.datasource.mapper;
 
 import com.datasource.config.TSBaseMapper;
-import com.datasource.entity.ETF;
-import com.datasource.entity.assetmanagement.Asset;
-import com.datasource.entity.vo.AssetCategoryVo;
-import com.datasource.entity.vo.AssetVo;
-import org.apache.ibatis.annotations.Insert;
+
+import com.datasource.entity.vo.AssetCategoryVO;
+import com.datasource.entity.vo.AssetVO;
 import org.apache.ibatis.annotations.Select;
+
 
 import java.util.Date;
 import java.util.List;
 
-public interface AssetMapper extends TSBaseMapper<Asset> {
+public interface AssetMapper<T> extends TSBaseMapper<T> {
+//a.create_time >= #{StartDate} and a.create_time <= #{EndDate} and
+    @Select("SELECT a.asset_id,a.user_id,a.category_id,a.asset_name,a.amount,a.currency,a.create_time,a.market_value,a.cost,a.profit,u.user_name,ac.category_name FROM asset a LEFT JOIN user u ON u.user_id = a.user_id LEFT JOIN asset_category ac ON a.category_id = ac.category_id where u.user_id = #{UserID} and a.category_id = #{CategoryID} and a.is_deleted = 0 and ac.is_deleted = 0 and a.create_time >= #{startDate} and a.create_time < #{endDate} ORDER BY a.asset_id  LIMIT #{index},#{size}")
+    List<AssetVO> getAssetList(int UserID, int CategoryID, Date startDate, Date endDate, int index, int size);
+    //, Date StartDate, Date EndDate
 
-    @Select("SELECT a.AssetName,a.Amount,a.Currency,a.create_time,a.MarketValue,a.Cost,a.Profit,u.UserName,ac.CategoryName FROM Asset a LEFT JOIN User u ON u.UserID = a.AssetID LEFT JOIN AssetCategory ac ON a.CategoryID = ac.CategoryID where u.UserID = #{UserID} and a.CategoryID = #{CategoryID} and a.create_time >= #{StartDate} and a.create_time <= #{EndDate} and a.is_deleted = 0 and ac.is_deleted = 0")
-    List<AssetVo> getAssetList(int UserID, int CategoryID, Date StartDate, Date EndDate);
-
-    @Select("select CategoryID,CategoryName from AssetCategory where is_deleted = 0")
-    List<AssetCategoryVo> getAssetCategoryList();
+    @Select("select category_id,category_name from asset_category where is_deleted = 0")
+    List<AssetCategoryVO> getAssetCategoryList();
 
 }

@@ -1,23 +1,29 @@
 package com.datasource.service.impl;
 
-import com.datasource.entity.vo.AssetVo;
+import com.alibaba.fastjson.JSONObject;
+import com.datasource.entity.assetmanagement.AssetDTO;
+import com.datasource.entity.vo.AssetVO;
 import com.datasource.mapper.AssetMapper;
 import com.datasource.service.AssetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 @Service
 public class AssetServiceImpl implements AssetService {
 
-    @Autowired
-    private AssetMapper assetMapper;
+    //@Autowired
+    //private AssetMapper assetMapper;
 
 
     @Override
-    public List<AssetVo> getAssetList() {
-        //System.out.println(33333333);
+    public List<AssetVO> getAssetList(JSONObject jsonObject) {
+        System.out.println(jsonObject);
+
         return null;
     }
 }
