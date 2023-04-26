@@ -1,7 +1,8 @@
 package com.datasource.entity.assetmanagement;
 
 
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -14,10 +15,11 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @ToString
+@Data
 public class AssetDTO {
-    //@TableField(value = "UserID")
+
     private Integer userId;
-    //@TableField("AssetID")
+    @TableId
     private Integer assetId;
     //@TableField("AssetName")
     private String assetName;
@@ -28,11 +30,12 @@ public class AssetDTO {
     private BigDecimal marketValue;
     private BigDecimal cost;
     private BigDecimal profit;
-    private String currency;
+    private Integer currencyId;
     //@TableField(value = "create_time")
     private LocalDateTime createTime;
-    //@TableField(value = "update_time")
+    @TableField(value = "update_time",fill = FieldFill.UPDATE)
     private LocalDateTime updateTime;
+    private LocalDateTime newTime;
     private Integer isDeleted;
     private String remarks;
 

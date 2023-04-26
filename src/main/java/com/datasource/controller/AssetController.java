@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.datasource.entity.assetmanagement.AssetDTO;
 import com.datasource.entity.vo.AssetCategoryVO;
 import com.datasource.entity.vo.AssetVO;
+import com.datasource.entity.vo.CurrencyVO;
 import com.datasource.entity.vo.HttpMsgVo;
 import com.datasource.mapper.AssetMapper;
 import com.datasource.service.impl.AssetServiceImpl;
@@ -43,7 +44,7 @@ public class AssetController {
         calendar.add(calendar.DATE,1);
         Date time2 = calendar.getTime();
         System.out.println(time2);
-        List<AssetVO> assetList = assetMapper.getAssetList(jsonObject.getIntValue("UserID"),jsonObject.getIntValue("CategoryID"),time1,time2,jsonObject.getIntValue("index"),jsonObject.getIntValue("size"));
+        List<AssetVO> assetList = assetMapper.getAssetList(jsonObject.getIntValue("userId"),jsonObject.getIntValue("categoryId"),time1,time2,jsonObject.getIntValue("index"),jsonObject.getIntValue("size"));
         System.out.println(assetList);
         httpMsg.setCode(20000);
         httpMsg.setMsg(assetList);
@@ -53,6 +54,14 @@ public class AssetController {
     public HttpMsgVo getAssetCategoryList(){
         List<AssetCategoryVO> assetCategoryList = assetMapper.getAssetCategoryList();
         httpMsg.setMsg(assetCategoryList);
+        httpMsg.setCode(20000);
+        return httpMsg;
+    }
+
+    @GetMapping(value = "/currency",produces = "application/json;charset=UTF-8")
+    public HttpMsgVo getCurrencyList(){
+        List<CurrencyVO> currencyList = assetMapper.getCurrencyList();
+        httpMsg.setMsg(currencyList);
         httpMsg.setCode(20000);
         return httpMsg;
     }
@@ -71,5 +80,20 @@ public class AssetController {
         }
         return httpMsg;
     }
+    @PostMapping(value = "/updateasset",produces = "application/json;charset=UTF-8")
+    public HttpMsgVo getUpdateAsset(@RequestBody String body){
+        System.out.println(body);
+        AssetDTO asset = JSON.toJavaObject(JSON.parseObject(body), AssetDTO.class);
+        System.out.println(asset);
+        int update = assetMapper.updateById(asset);
+        httpMsg.setMsg("");
+        if(update == 1){
+            httpMsg.setCode(20000);
+        }else{
+            httpMsg.setCode(10000);
+        }
+        return httpMsg;
+    }
+
 
 }

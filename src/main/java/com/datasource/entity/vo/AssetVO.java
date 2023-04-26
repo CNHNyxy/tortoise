@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 @ToString
 public class AssetVO {
 //    private String UserName;
+    private Integer assetId;
     private Integer userId;
     private Integer categoryId;
     private String assetName;
@@ -20,7 +21,10 @@ public class AssetVO {
     private BigDecimal marketValue;
     private BigDecimal cost;
     private BigDecimal profit;
-    private String currency;
+    private Integer currencyId;
+    private String currencyName;
     private LocalDateTime createTime;
+    //private LocalDateTime updateTime;
+    private LocalDateTime newTime;
     private String categoryName;
 }
