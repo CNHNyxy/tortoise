@@ -6,6 +6,7 @@ import com.alibaba.fastjson.JSONObject;
 //import okhttp3.*;
 import com.datasource.entity.assetmanagement.AssetDTO;
 import com.datasource.entity.vo.AssetVO;
+import com.datasource.httpserver.ZKShare;
 import com.datasource.util.QleUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,8 +35,12 @@ public class ETFMapperTest {
         System.out.println(allETF);*/
     }
 
+    @Autowired
+    private ZKShare zkShare;
+
     @Test
-    public void Asset() throws ParseException {
+    public void
+    Asset() throws ParseException {
 //        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
 //        Date parse = simpleDateFormat.parse("20230411");
 //        Date parse1 = simpleDateFormat.parse("20230424");
@@ -44,13 +49,17 @@ public class ETFMapperTest {
 //        calendar.add(calendar.DATE,1);
 //        parse1 = calendar.getTime();
 //        System.out.println(assetMapper.getAssetList(1, 1, parse, parse1, 0, 10));
-        System.out.println(LocalDateTime.now());
-        AssetDTO assetVO = new AssetDTO();
-        assetVO.setAssetId(6);
-        assetVO.setAssetName("2222222");
-        //assetVO.setUpdateTime(LocalDateTime.now());
-        int update = assetMapper.updateById(assetVO);
-        System.out.println(update);
+//        System.out.println(LocalDateTime.now());
+//        AssetDTO assetVO = new AssetDTO();
+//        assetVO.setAssetId(6);
+//        assetVO.setAssetName("2222222");
+//        //assetVO.setUpdateTime(LocalDateTime.now());
+//        int update = assetMapper.updateById(assetVO);
+//        System.out.println(update);
+        List<JSONObject> zkShare1 = zkShare.getZKShare();
+        for (JSONObject str : zkShare1){
+            System.out.println(str.toJSONString());
+        }
 
     }
 
